@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Highland Park Scots">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="oklch(30% 0.06 258)"/>
+      <stop offset="1" stop-color="oklch(20% 0.05 258)"/>
+    </linearGradient>
+  </defs>
+  <path d="M50 4 82 16v34c0 22-14 34-32 46C32 84 18 72 18 50V16z" fill="url(#g)" stroke="oklch(78% 0.14 85)" stroke-width="3"/>
+  <text x="50" y="58" text-anchor="middle" font-family="Oswald, sans-serif" font-weight="700" font-size="34" fill="oklch(78% 0.14 85)" letter-spacing="1">HP</text>
+</svg>
