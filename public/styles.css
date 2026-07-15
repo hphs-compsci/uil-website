@@ -193,11 +193,30 @@
 
   @media (max-width:900px){
     .nav{ padding:12px 18px; flex-wrap:wrap; gap:10px; }
-    .hero{ grid-template-columns:1fr; }
-    .hero-copy{ padding:48px 24px; }
+    /* Stack the copy on top of the photo instead of below it: both children
+       occupy the same grid cell, so the hero reads as one image with text over
+       it rather than something you scroll past. */
+    .hero{ grid-template-columns:1fr; grid-template-rows:1fr; }
+    .hero-copy,
+    .hero-photo{ grid-area:1 / 1; }
+    .hero-copy{ padding:56px 24px; position:relative; z-index:1; }
     .hero h1{ font-size:40px; }
-    .hero-photo{ min-height:280px; }
+    /* The photo is a real <img> (so its onError fallback still works); this
+       just lets it fill the cell it now shares with the copy. */
+    .hero-photo{ min-height:0; }
+    /* Scrim: the photo is light enough that white text needs help. Darker at
+       the bottom where the buttons sit. */
+    .hero-photo::after{
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(180deg,
+        oklch(24% 0.05 258 / 0.62) 0%,
+        oklch(24% 0.05 258 / 0.78) 100%);
+    }
     .stats{ grid-template-columns:1fr; }
+    /* Side by side, the fixed-width photo squeezes the bio into a sliver.
+       Stack them so the photo gets the full width and the text reads normally. */
+    .person{ flex-direction:column; }
+    .person .photo{ width:100%; height:260px; align-self:auto; }
     .page{ padding:44px 22px; }
     .practice{ padding:40px 18px; }
     .practice-grid{ grid-template-columns:1fr; }

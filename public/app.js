@@ -138,7 +138,11 @@ function render(){ mount(CurrentPage, state.page); }
 
 window.addEventListener('hashchange', () => {
   const p = pageFromHash();
-  if (p !== state.page) setState({ page:p });
+  if (p === state.page) return;
+  setState({ page:p });
+  // A hash change isn't a real navigation, so the browser keeps the old scroll
+  // position; landing halfway down a fresh page is disorienting.
+  window.scrollTo(0, 0);
 });
 
 render();

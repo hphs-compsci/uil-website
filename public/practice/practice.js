@@ -56,10 +56,14 @@ const state = {
 function setState(patch){ Object.assign(state, patch); render(); }
 
 /* ---------- actions ---------- */
-function setPracticeTab(t){ setState({ practiceTab:t }); }
-function goProblemsMenu(){ setState({ problemsView:'menu' }); }
-function goGenerator(){ setState({ problemsView:'generator' }); }
-function goPastTests(){ setState({ problemsView:'pastTests' }); }
+// Switching tab or view swaps the whole pane, so keeping the old scroll offset
+// drops you into the middle of the new one. Only the navigation actions reset
+// it — a slider drag or an answer click must not move the page.
+function toTop(){ window.scrollTo(0, 0); }
+function setPracticeTab(t){ setState({ practiceTab:t }); toTop(); }
+function goProblemsMenu(){ setState({ problemsView:'menu' }); toTop(); }
+function goGenerator(){ setState({ problemsView:'generator' }); toTop(); }
+function goPastTests(){ setState({ problemsView:'pastTests' }); toTop(); }
 function toggleDifficulty(d){ setState({ difficulties:{ ...state.difficulties, [d]:!state.difficulties[d] } }); }
 function setTopicQty(t, qty){ setState({ topicQty:{ ...state.topicQty, [t]:qty } }); }
 function presetNone(){ setState({ topicQty:Object.fromEntries(TOPIC_LIST.map(t=>[t,0])) }); }
@@ -93,6 +97,9 @@ async function generateQuiz(){
     return;
   }
 
+  // Scroll once as we leave the topic list; the streaming updates below
+  // re-render repeatedly and must not keep yanking the page back up.
+  toTop();
   setState({
     generatedQuestions:[], quizAnswers:{}, quizSubmitted:false,
     generating:true, generateError:null, problemsView:'quiz',
