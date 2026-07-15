@@ -6,10 +6,12 @@
 
 const TOPIC_LIST = ['Number Bases','Literal Expressions','Print & Output','String Methods','Boolean Logic','Math Class','Variable Expressions','Conditionals','Output Loops','1D Arrays','Scanner & File Input','Accumulation Loops','Order of Operations','Data Types & Memory','ArrayList Generics'];
 const RESOURCES = [
-  { name:'Java Quick Reference', desc:'Syntax and standard library cheat sheet', href:'#' },
-  { name:'UIL CS Contest Format Guide', desc:'How written test + programming scoring works', href:'#' },
-  { name:'Past UIL Tests Archive', desc:'Add link to shared drive of past tests', href:'#' },
-  { name:'Data Structures Primer', desc:'Arrays, stacks, queues, trees', href:'#' },
+  { name:'Java Quick Reference', desc:'Syntax and standard library cheat sheet',
+    href:'https://javacheatsheet.vercel.app/' },
+  { name:'UIL CS Contest Format Guide', desc:'The official 2025–26 Java topic list',
+    href:'https://www.uiltexas.org/files/academics/UILCS-JavaTopicList2526.pdf' },
+  { name:'Past UIL Tests Archive', desc:'Shared drive of past contest tests',
+    href:'https://drive.google.com/drive/folders/1KjrekcfWCzct9wFcUj6x_9LwbK3n2cQu' },
 ];
 const PAST_TESTS = [
   { name:'Fall Invitational Written Test', tag:'Full test · 2025', href:'#', level:'Easy' },
@@ -274,8 +276,11 @@ function PastTests(){
   ]);
 }
 function ResourcesPane(){
+  // These all point off-site, so open them in a new tab rather than dropping
+  // someone out of a practice session.
   return h('div',{class:'stack'}, RESOURCES.map(r=>
-    h('a',{href:r.href, class:'menu-card', style:'text-decoration:none;'},[
+    h('a',{href:r.href, class:'menu-card', style:'text-decoration:none;',
+           target:'_blank', rel:'noopener noreferrer'},[
       h('div',null,[
         h('div',{class:'title'},r.name),
         h('div',{class:'desc'},r.desc),
