@@ -1,0 +1,3 @@
+[submodule "ai-question-generator"]
+	path = ai-question-generator
+	url = https://github.com/hphs-compsci/ai-question-generator

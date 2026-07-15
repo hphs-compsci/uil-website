@@ -1,0 +1,19 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "uil-cs-website",
+	"main": "src/index.js",
+	"compatibility_date": "2026-07-14",
+	"compatibility_flags": ["nodejs_compat"],
+	"observability": {
+		"enabled": true
+	},
+	"upload_source_maps": true,
+	"assets": {
+		"directory": "./public",
+		"binding": "ASSETS",
+		// Public files are served without invoking the Worker. The practice app
+		// and the API must run Worker code first so the Access JWT is verified
+		// before any of it is handed out.
+		"run_worker_first": ["/api/*", "/practice", "/practice/*"]
+	}
+}

@@ -1,0 +1,5 @@
+.wrangler
+.claude
+.secrets
+node_modules
+.dev.vars
