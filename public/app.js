@@ -42,14 +42,14 @@ function Home(){
         h('h1',null,'UIL Computer Science'),
         h('p',null,'Scots writing code, solving problems, and competing across Texas. We build programmers who think fast, debug faster, and never leave a semicolon behind.'),
         h('div',{class:'cta-row'},[
-          h('button',{class:'btn btn-gold', onClick:()=>setPage('captains')},'Meet the Captains'),
-          h('button',{class:'btn btn-ghost', onClick:()=>setPage('schedule')},'View Schedule'),
+          h('a',{class:'btn btn-gold', href:navHref('captains')},'Meet the Captains'),
+          h('a',{class:'btn btn-ghost', href:navHref('schedule')},'View Schedule'),
         ]),
       ]),
       h('div',{class:'hero-photo'}, imgSlot("Drop last year's team photo here", 'assets/team.webp')),
     ]),
     h('div',{class:'stats'},[
-      stat('Tuesdays','Weekly practice, after school'),
+      stat('Wednesdays','Weekly practice, after school'),
       stat('Grades 9–12','Open to every Scot'),
       stat('All Levels','No experience required'),
     ]),
@@ -60,8 +60,8 @@ function About(){
     h('span',{class:'eyebrow'},'About'),
     h('h1',{class:'h1'},'What we do'),
     h('p',{class:'prose'},'UIL Computer Science is a Texas academic contest that tests students on programming (in Java), computer science theory, and logic under timed pressure. Teams write short programs to solve problems, answer written questions on data structures and algorithms, and compete individually and as a team at invitational, district, regional, and state meets throughout the year.'),
-    h('p',{class:'prose'},"The Highland Park High School team is open to any Scot who wants to get better at programming and problem-solving, whether you've never written a line of code or you're already deep into AP Computer Science. We practice together weekly, work through past contests, and travel to meets across the region."),
-    h('p',{class:'prose'},'New members are always welcome — come to a Tuesday practice to see what it’s about.'),
+    h('p',{class:'prose'},"The Highland Park High School team is open to any Scot who wants to get better at programming and problem-solving, whether you've never written a line of code or you're already an expert. We practice together weekly, work through past contests, and travel to meets across the region."),
+    h('p',{class:'prose'},'New members are always welcome — come to a Wednesday practice to see what it’s about.'),
   ]);
 }
 function Captains(){
@@ -85,7 +85,7 @@ function Coaching(){
       imgSrc:'assets/jones.webp',
       name:'Elizabeth Jones',
       role:'HEAD COACH',
-      bio:'Coach Jones leads the HPHS UIL Computer Science team, guiding students through contest prep, coding practice, and competition-day strategy.',
+      bio:'In addition to teaching Computer Science, Ms. Jones leads the HPHS UIL Computer Science team, guiding students through contest prep, coding practice, and competition-day strategy.',
       email:'jonese@hpisd.org',
     }),
   ]);
@@ -103,7 +103,7 @@ function Schedule(){
         h('div',{class:'date'},m.date),
       ])
     )),
-    h('p',{class:'note'},'dates/locations are placeholders — update once the UIL calendar is finalized'),
+    h('p',{class:'note'},'Dates and locations are not finalized.'),
   ]);
 }
 function Contact(){
@@ -114,9 +114,9 @@ function Contact(){
     h('div',{class:'card contact-card'},[
       block('Coach Elizabeth Jones', h('a',{href:'mailto:jonese@hpisd.org', style:'font-size:16px;margin-top:4px;display:inline-block;'},'jonese@hpisd.org')),
       h('div',{class:'contact-hr'}),
-      block('Team Inbox', h('a',{href:'mailto:uilcs@hphs.hpisd.org', style:'font-size:16px;margin-top:4px;display:inline-block;'},'uilcs@hphs.hpisd.org')),
+      block('Team Inbox', h('a',{href:'mailto:hp@uilcs.org', style:'font-size:16px;margin-top:4px;display:inline-block;'},'hp@uilcs.org')),
       h('div',{class:'contact-hr'}),
-      block('Where we practice', h('div',{style:'font-size:16px;margin-top:4px;color:oklch(28% 0.01 258);'},'Highland Park High School — Tuesdays after school')),
+      block('Where we practice', h('div',{style:'font-size:16px;margin-top:4px;color:oklch(28% 0.01 258);'},'Highland Park High School — Wednesdays after school')),
     ]),
   ]);
 }

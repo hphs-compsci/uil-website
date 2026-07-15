@@ -160,8 +160,8 @@ function ProblemsMenu(){
     h('div',{class:'pill'},'Easy–Hard'),
   ]);
   return h('div',{class:'stack'},[
-    card('Custom Generated Questions','Pick topics and difficulty, get a fresh multiple-choice set, and see your score.', goGenerator),
-    card('Past UIL Written Tests','Full past contest tests to work through at your own pace.', goPastTests),
+    card('The First 15 (AI Generated)','Pick topics and difficulty, get a fresh multiple-choice set, and see your score.', goGenerator),
+    card('Past UIL Written Tests (Under Construction)','Full past contest tests to work through at your own pace.', goPastTests),
   ]);
 }
 function Generator(){
