@@ -4,9 +4,9 @@
 
 // Ordered alphabetically by last name.
 const CAPTAINS = [
-  { name:'Will Forsberg', role:'TEAM CAPTAIN' },
-  { name:'Shayen Nair', role:'CO-CAPTAIN' },
-  { name:'John Shamburger', role:'CO-CAPTAIN' },
+  { name:'Will Forsberg', role:'TEAM CAPTAIN', imgSrc:'assets/berg.webp' },
+  { name:'Shayen Nair', role:'CO-CAPTAIN', imgSrc:'assets/shayen.webp' },
+  { name:'John Shamburger', role:'CO-CAPTAIN', imgSrc:'assets/john.webp' },
 ];
 const MEETS = [
   { name:'Invitational A', location:'Princeton High School', date:'January 08, 2027' },
