@@ -55,6 +55,44 @@ const state = {
 
 function setState(patch){ Object.assign(state, patch); render(); }
 
+/* ---------- number-base notation ---------- */
+// Questions write bases as `265_8` or `B5_(16)`. Render the suffix as a real
+// subscript.
+//
+// The catch: Java also uses `_` as a digit separator, and the banks contain
+// both `0b1010_1100` and bare `0100_0011`. Those must stay literal. Two things
+// keep them out: the suffix must be a valid radix (2-36), and a leading zero
+// disqualifies it — no one writes base 08, but `0100_0011` is exactly that
+// shape. Parenthesised suffixes are unambiguous, so they skip the checks.
+const BASE_NOTATION = /\b([0-9A-Za-z]+)_(?:\((\d{1,2})\)|(\d{1,2}))(?![\w(])/g;
+
+function isPlausibleBase(digits, parenthesised){
+  if (parenthesised) return true;
+  if (digits.length > 1 && digits[0] === '0') return false;  // 0100_0011
+  const n = Number(digits);
+  return n >= 2 && n <= 36;
+}
+
+// Returns an array of strings and <sub> elements for h() to append. Text is
+// never parsed as HTML, so model output can't inject markup.
+function withSubscripts(text){
+  const src = String(text ?? '');
+  const out = [];
+  let last = 0;
+  BASE_NOTATION.lastIndex = 0;
+  for (let m; (m = BASE_NOTATION.exec(src)) !== null; ){
+    const [full, value, paren, bare] = m;
+    const digits = paren ?? bare;
+    if (!isPlausibleBase(digits, paren !== undefined)) continue;
+    if (m.index > last) out.push(src.slice(last, m.index));
+    out.push(value, h('sub', null, digits));
+    last = m.index + full.length;
+  }
+  if (!out.length) return [src];
+  if (last < src.length) out.push(src.slice(last));
+  return out;
+}
+
 /* ---------- actions ---------- */
 // Switching tab or view swaps the whole pane, so keeping the old scroll offset
 // drops you into the middle of the new one. Only the navigation actions reset
@@ -228,13 +266,13 @@ function QuizView(){
       } else if (selected){ bg='oklch(94% 0.03 258)'; color=NAVY; }
       return h('button',{ class:'opt', style:`background:${bg};color:${color};`, onClick:()=>selectAnswer(qi,oi) },[
         h('span',{class:'letter'}, String.fromCharCode(65+oi)+')'),
-        h('span',{class:'lab'}, label),
+        h('span',{class:'lab'}, withSubscripts(label)),
       ]);
     });
     const topicNum = TOPIC_LIST.indexOf(q.topic)+1;
     const body = h('div',{class:'q-body', style:`grid-template-columns:${q.code?'1fr 1fr':'1fr'};`},[
       h('div',{class:'prompt'},[
-        h('div',{class:'text'}, q.text),
+        h('div',{class:'text'}, withSubscripts(q.text)),
         h('div',{class:'opts'}, opts),
       ]),
       q.code ? h('pre',{class:'q-code'}, q.code) : null,
@@ -245,9 +283,11 @@ function QuizView(){
         h('span',{class:'d'}, q.difficulty),
       ]),
       body,
+      // The code block is deliberately excluded: `_` there is Java's digit
+      // separator, not base notation.
       (state.quizSubmitted && q.explanation) ? h('div',{class:'q-explain'},[
         h('span',{class:'lbl'},'Explanation'),
-        h('span',null, q.explanation),
+        h('span',null, withSubscripts(q.explanation)),
       ]) : null,
     ]);
   });
