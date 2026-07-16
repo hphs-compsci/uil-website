@@ -2,6 +2,12 @@
 
 /* Public site. Practice lives at /practice/ and is gated separately. */
 
+// Ordered alphabetically by last name.
+const CAPTAINS = [
+  { name:'Will Forsberg', role:'TEAM CAPTAIN' },
+  { name:'Shayen Nair', role:'CO-CAPTAIN' },
+  { name:'John Shamburger', role:'CO-CAPTAIN' },
+];
 const MEETS = [
   { name:'Invitational A', location:'Princeton High School', date:'January 08, 2027' },
   { name:'Invitational B', location:'Crandall High School', date:'Date TBD' },
@@ -68,12 +74,15 @@ function Captains(){
   return h('div',{class:'page fade', style:'max-width:680px;'},[
     h('span',{class:'eyebrow'},'Leadership'),
     h('h1',{class:'h1'},'Team Captains'),
-    personCard({
-      placeholder:'Drop captain photo',
-      name:'Will Forsberg',
-      role:'TEAM CAPTAIN',
-      bio:'Bio coming soon — check back after this season kicks off.',
-    }),
+    h('div',{class:'stack'}, CAPTAINS.map(c=>
+      personCard({
+        placeholder:'Drop captain photo',
+        imgSrc:c.imgSrc,
+        name:c.name,
+        role:c.role,
+        bio:c.bio || 'Bio coming soon — check back after this season kicks off.',
+      })
+    )),
   ]);
 }
 function Coaching(){
