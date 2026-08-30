@@ -47,6 +47,10 @@
   .page{ padding:70px 56px; margin:0 auto; width:100%; }
   .eyebrow{ color:var(--gold-text); font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; }
   .h1{ font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; font-size:40px; margin:10px 0 24px; color:var(--navy); }
+  .h2{ font-family:'Oswald',sans-serif; font-weight:600; text-transform:uppercase; font-size:26px; margin:0 0 18px; color:var(--navy); }
+  /* Separates stacked sections on a merged page (About). The rule reads as the
+     break between them, so the first heading on a page shouldn't get one. */
+  .h2.section{ margin-top:56px; padding-top:28px; border-top:1px solid oklch(90% 0.01 258); }
   .prose{ font-size:17px; line-height:1.75; color:oklch(28% 0.01 258); }
   .prose + .prose{ margin-top:18px; }
   .card{ background:#fff; border-radius:10px; box-shadow:0 1px 4px rgba(0,0,0,.06); }

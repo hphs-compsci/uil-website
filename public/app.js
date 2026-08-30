@@ -16,9 +16,13 @@ const MEETS = [
   { name:'UIL State Meet', location:'Austin, TX', date:'Date TBD' },
 ];
 
-const PUBLIC_PAGES = ['home','about','captains','coaching','schedule','contact'];
+const PUBLIC_PAGES = ['home','about','schedule','contact'];
+// Captains and Coaching used to be their own pages. They're sections of About
+// now, but old links are still out there, so keep resolving them.
+const MERGED_INTO_ABOUT = ['captains','coaching'];
 function pageFromHash(){
   const key = (location.hash || '').replace(/^#\/?/, '');
+  if (MERGED_INTO_ABOUT.includes(key)) return 'about';
   return PUBLIC_PAGES.includes(key) ? key : 'home';
 }
 
@@ -48,7 +52,7 @@ function Home(){
         h('h1',null,'UIL Computer Science'),
         h('p',null,'Scots writing code, solving problems, and competing across Texas. We build programmers who think fast, debug faster, and never leave a semicolon behind.'),
         h('div',{class:'cta-row'},[
-          h('a',{class:'btn btn-gold', href:navHref('captains')},'Meet the Captains'),
+          h('a',{class:'btn btn-gold', href:'/#captains'},'Meet the Captains'),
           h('a',{class:'btn btn-ghost', href:navHref('schedule')},'View Schedule'),
         ]),
       ]),
@@ -61,6 +65,9 @@ function Home(){
     ]),
   ]);
 }
+// About, the coach, and the captains were three thin pages; they read better as
+// one story — what the contest is, then who runs the team. The old #captains and
+// #coaching hashes still land here, on their section (see pageFromHash).
 function About(){
   return h('div',{class:'page fade', style:'max-width:820px;'},[
     h('span',{class:'eyebrow'},'About'),
@@ -68,12 +75,8 @@ function About(){
     h('p',{class:'prose'},'UIL Computer Science is a Texas academic contest that tests students on programming (in Java), computer science theory, and logic under timed pressure. Teams write short programs to solve problems, answer written questions on data structures and algorithms, and compete individually and as a team at invitational, district, regional, and state meets throughout the year.'),
     h('p',{class:'prose'},"The Highland Park High School team is open to any Scot who wants to get better at programming and problem-solving, whether you've never written a line of code or you're already an expert. We practice together weekly, work through past contests, and travel to meets across the region."),
     h('p',{class:'prose'},'New members are always welcome — come to a Wednesday practice to see what it’s about.'),
-  ]);
-}
-function Captains(){
-  return h('div',{class:'page fade', style:'max-width:680px;'},[
-    h('span',{class:'eyebrow'},'Leadership'),
-    h('h1',{class:'h1'},'Team Captains'),
+
+    h('h2',{class:'h2 section', id:'captains'},'Team Captains'),
     h('div',{class:'stack'}, CAPTAINS.map(c=>
       personCard({
         placeholder:'Drop captain photo',
@@ -83,12 +86,8 @@ function Captains(){
         bio:c.bio || 'Bio coming soon — check back after this season kicks off.',
       })
     )),
-  ]);
-}
-function Coaching(){
-  return h('div',{class:'page fade', style:'max-width:680px;'},[
-    h('span',{class:'eyebrow'},'Coaching Staff'),
-    h('h1',{class:'h1'},'Meet the Coach'),
+
+    h('h2',{class:'h2 section', id:'coaching'},'Coaching Staff'),
     personCard({
       placeholder:'Drop coach photo',
       imgSrc:'assets/jones.webp',
@@ -135,8 +134,6 @@ function CurrentPage(){
   switch(state.page){
     case 'home': return Home();
     case 'about': return About();
-    case 'captains': return Captains();
-    case 'coaching': return Coaching();
     case 'schedule': return Schedule();
     case 'contact': return Contact();
     default: return Home();
@@ -145,13 +142,30 @@ function CurrentPage(){
 
 function render(){ mount(CurrentPage, state.page); }
 
+// A hash naming a section within the current page (#captains, #coaching) should
+// scroll to it. The browser can't do this itself: mount() rebuilds the DOM, so
+// the target doesn't exist yet at hashchange time — and after a re-render it's
+// a different element than the one the browser looked for.
+function scrollToHashTarget(){
+  const id = (location.hash || '').replace(/^#\/?/, '');
+  const el = id && document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+  return Boolean(el);
+}
+
 window.addEventListener('hashchange', () => {
   const p = pageFromHash();
-  if (p === state.page) return;
+  if (p === state.page){
+    // Same page, so nothing to re-render — but the hash may point at a section.
+    scrollToHashTarget();
+    return;
+  }
   setState({ page:p });
   // A hash change isn't a real navigation, so the browser keeps the old scroll
   // position; landing halfway down a fresh page is disorienting.
-  window.scrollTo(0, 0);
+  if (!scrollToHashTarget()) window.scrollTo(0, 0);
 });
 
 render();
+// An inbound link straight to #captains lands mid-page, not at the top.
+scrollToHashTarget();

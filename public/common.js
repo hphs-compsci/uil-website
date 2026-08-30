@@ -8,12 +8,10 @@ const GOLD = "var(--gold)";
 const NAV_PAGES = [
   { key:'home', label:'Home' },
   { key:'about', label:'About' },
-  { key:'captains', label:'Captains' },
-  { key:'coaching', label:'Coaching' },
   { key:'schedule', label:'Schedule' },
   { key:'contact', label:'Contact' },
-  { key:'practice', label:'Practice' },
   { key:'drive', label:'Drive', external:true },
+  { key:'practice', label:'Practice' },
 ];
 
 /* ---------- small DOM helpers ---------- */
