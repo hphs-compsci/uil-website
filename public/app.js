@@ -125,8 +125,8 @@ function Contact(){
     h('div',{class:'card contact-card'},[
       block('Coach Elizabeth Jones', h('a',{href:'mailto:jonese@hpisd.org', style:'font-size:16px;margin-top:4px;display:inline-block;'},'jonese@hpisd.org')),
       h('div',{class:'contact-hr'}),
-      block('Team Inbox', h('a',{href:'mailto:hp@uilcs.org', style:'font-size:16px;margin-top:4px;display:inline-block;'},'hp@uilcs.org')),
-      h('div',{class:'contact-hr'}),
+      /*block('Team Inbox', h('a',{href:'mailto:hp@uilcs.org', style:'font-size:16px;margin-top:4px;display:inline-block;'},'hp@uilcs.org')),
+      h('div',{class:'contact-hr'}),*/
       block('Where we practice', h('div',{style:'font-size:16px;margin-top:4px;color:oklch(28% 0.01 258);'},'Highland Park High School — Wednesdays after school')),
     ]),
   ]);
