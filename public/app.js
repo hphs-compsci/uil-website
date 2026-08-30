@@ -8,11 +8,14 @@ const CAPTAINS = [
   { name:'Shayen Nair', role:'CO-CAPTAIN', imgSrc:'assets/shayen.webp' },
   { name:'John Shamburger', role:'CO-CAPTAIN', imgSrc:'assets/john.webp' },
 ];
+// In season order. Fall meets are 2026, everything from January on is 2027.
 const MEETS = [
-  { name:'Invitational A', location:'Princeton High School', date:'January 08, 2027' },
-  { name:'Invitational B', location:'Crandall High School', date:'Date TBD' },
-  { name:'District Meet', location:'Highland Park High School', date:'Date TBD' },
-  { name:'Regional Meet', location:'TBD', date:'Date TBD' },
+  { name:'UTD Battle of the Brains', location:'UT Dallas', date:'November 7, 2026' },
+  { name:'Invitational', location:'Location TBD', date:'December 5, 2026' },
+  { name:'UIL Invitational A', location:'Princeton High School (Tentative)', date:'January 9, 2027' },
+  { name:'UIL Invitational B', location:'Crandall High School (Tentative)', date:'February 20, 2027' },
+  { name:'District Meet', location:'Highland Park High School', date:'April 3, 2027' },
+  { name:'Regional Meet', location:'TBD', date:'April 23, 2027' },
   { name:'UIL State Meet', location:'Austin, TX', date:'Date TBD' },
 ];
 
@@ -111,7 +114,7 @@ function Schedule(){
         h('div',{class:'date'},m.date),
       ])
     )),
-    h('p',{class:'note'},'Dates and locations are not finalized.'),
+    h('p',{class:'note'},'Dates are scheduled but subject to change; locations marked TBD are still being confirmed.'),
   ]);
 }
 function Contact(){
