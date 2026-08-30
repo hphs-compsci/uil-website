@@ -11,7 +11,7 @@ const CAPTAINS = [
 // In season order. Fall meets are 2026, everything from January on is 2027.
 const MEETS = [
   { name:'UTD Battle of the Brains', location:'UT Dallas', date:'November 7, 2026' },
-  { name:'Invitational', location:'Location TBD', date:'December 5, 2026' },
+  { name:'Christmas Invitational', location:'Location TBD', date:'December 5, 2026' },
   { name:'UIL Invitational A', location:'Princeton High School (Tentative)', date:'January 9, 2027' },
   { name:'UIL Invitational B', location:'Crandall High School (Tentative)', date:'February 20, 2027' },
   { name:'District Meet', location:'Highland Park High School', date:'April 3, 2027' },
