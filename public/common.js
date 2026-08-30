@@ -13,6 +13,7 @@ const NAV_PAGES = [
   { key:'schedule', label:'Schedule' },
   { key:'contact', label:'Contact' },
   { key:'practice', label:'Practice' },
+  { key:'drive', label:'Drive', external:true },
 ];
 
 /* ---------- small DOM helpers ---------- */
@@ -43,9 +44,13 @@ function imgSlot(text, imgSrc){
 }
 
 // Practice lives at its own path, so nav has to leave the SPA rather than
-// just set a hash. Everything else stays a hash route on the public page.
+// just set a hash. Drive points at the Worker's short link rather than the
+// Google URL directly, so the folder is only written down in one place.
+// Everything else stays a hash route on the public page.
 function navHref(key){
-  return key === 'practice' ? '/practice/' : '/#' + key;
+  if (key === 'practice') return '/practice/';
+  if (key === 'drive') return '/drive';
+  return '/#' + key;
 }
 
 /* ---------- shared chrome ---------- */
@@ -55,6 +60,9 @@ function Nav(activeKey){
     return h('a', {
       class:'navlink' + (active?' active':''),
       href: navHref(p.key),
+      // An off-site destination shouldn't cost you the page you were on.
+      target: p.external ? '_blank' : null,
+      rel: p.external ? 'noopener' : null,
     }, p.label);
   });
   return h('div',{class:'nav'},[

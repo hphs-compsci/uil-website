@@ -8,6 +8,14 @@ import generator from "../ai-question-generator/src/index.js";
 // route) would be served the practice app and the AI endpoint for free.
 const GATED_PREFIXES = ["/practice", "/api/"];
 
+// Short links the Worker owns, so a URL that's easy to say out loud ("go to
+// hp.uilcs.org/drive") can be repointed here instead of in everyone's notes.
+const REDIRECTS = {
+  "/drive": "https://drive.google.com/drive/folders/1eiin_b3vSjsVHrp0rg2jizlnY-24L9n_",
+  "/drive/resources":
+    "https://docs.google.com/document/d/1eTs1rCWlA3x8vw38fumVQ3i06QR_BEjwYoGha_f56k4/edit?tab=t.0#heading=h.iz4w2ht787aq",
+};
+
 // createRemoteJWKSet handles its own caching and refetches when it sees an
 // unknown `kid`, which is what lets Access rotate signing keys without breaking
 // verification. Key the cache by team domain so a config change builds a new
@@ -109,6 +117,12 @@ async function verifyAccess(request, env) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+
+    // Before the Access gate: these are public pointers, and there's nothing
+    // behind them to protect. 302, not 301 — a permanent redirect would be
+    // cached in browsers we can't reach if the folder ever moves.
+    const redirect = REDIRECTS[url.pathname.replace(/\/+$/, "") || "/"];
+    if (redirect) return Response.redirect(redirect, 302);
 
     let identity = null;
     if (isGated(url.pathname)) {
